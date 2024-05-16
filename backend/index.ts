@@ -1,3 +1,4 @@
+
 import "dotenv/config";
 import mongoose from "mongoose";
 import { Buyer } from "./models/Buyers";
@@ -8,6 +9,7 @@ import compression from "compression";
 import cookieParser from 'cookie-parser';
 import bodyParser from "body-parser";
 import http from "http";
+import { router as buyerRouter } from "./routes/buyers";
 
 const app = express();
 app.use(
@@ -18,6 +20,13 @@ app.use(
 app.use(cookieParser());
 app.use(compression());
 app.use(bodyParser.json());
+app.use(express.json());
+
+
+app.use("/api", buyerRouter);
+app.get("/", (req, res) => {
+  res.status(200).send("hello!");
+});
 
 const server = http.createServer(app);
 
