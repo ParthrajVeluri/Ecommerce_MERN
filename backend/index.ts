@@ -1,20 +1,36 @@
-import * as mongoose from "mongoose";
+import "dotenv/config";
+import mongoose from "mongoose";
 import { Buyer } from "./models/Buyers";
 import { Seller } from "./models/Sellers";
 import express, { Express, Request, Response } from "express";
+import cors from "cors";
+import compression from "compression";
+import cookieParser from 'cookie-parser';
+import bodyParser from "body-parser";
+import http from "http";
 
 const app = express();
+app.use(
+    cors({
+        credentials: true,
+    })
+);
+app.use(cookieParser());
+app.use(compression());
+app.use(bodyParser.json());
 
-const connectDB = async () => {
-    await mongoose.connect(
-        "mongodb+srv://Admin:Welcome123@ecommercewebsite.ztbkqid.mongodb.net/MernDB"
-    );
-};
+const server = http.createServer(app);
 
-connectDB();
+const MONGO_URL:string = (process.env.MONGODB_URL as string);
+async()=>{
+    try{
+        await mongoose.connect(MONGO_URL)
+    }catch(err){
+        console.log("Error connecting to database")
+        console.log(err)
+    }
+} 
 
-app.get("/", (req: Request, res: Response) => {
-    res.send("EXPRESS IS RUNNING");
+server.listen(8000, () => {
+    console.log("Server running on http://localhost:8000");
 });
-
-app.listen(8000, () => console.log("Example app listening on port 8000!"));
