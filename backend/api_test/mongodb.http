@@ -1,0 +1,33 @@
+@baseUrl = http://localhost:3000/api
+
+###
+POST {{baseUrl}}/createBuyer
+Content-Type: application/json
+
+{
+    "name" : "Brian",
+    "email" : "b23@gmail.com",
+    "password" : "password",
+    "address" : "address",
+    "phone" : "3131251"
+}
+
+###
+PUT {{baseUrl}}/updateBuyer
+Content-Type: application/json
+
+{
+    "name" : "Brian",
+    "email" : "b23@gmail.com",
+    "password" : "passwordchanged"
+}
+
+###
+DELETE  {{baseUrl}}/updateBuyer
+Content-Type: application/json
+
+{
+    "email" : "b23@gmail.com"
+}
+
+
