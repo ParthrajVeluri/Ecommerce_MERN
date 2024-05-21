@@ -1,4 +1,4 @@
-import { createBuyer, delBuyer, updateBuyer } from "../controllers/Buyers";
+import { createBuyer, deleteBuyer, updateBuyer } from "../controllers/Buyers";
 import express from "express";
 const router = express.Router();
 
@@ -12,9 +12,9 @@ router.post("/createBuyer", async (req, res) => {
 });
 
 //Delete a Buyer
-router.delete("/delBuyer", async (req, res) => {
+router.delete("/deleteBuyer", async (req, res) => {
   try {
-    await delBuyer(req, res);
+    await deleteBuyer(req, res);
   } catch (err) {
     console.log(err);
   }
@@ -29,4 +29,4 @@ router.put("/updateBuyer", async (req, res) => {
   }
 });
 
-export { router };
+export { router as buyerRouter} ;
