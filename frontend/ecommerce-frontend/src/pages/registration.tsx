@@ -1,9 +1,6 @@
 import Button from "../components/Button";
 import FormInput from "../components/FormInput";
 import nexusLogo from "../images/nexus-logo.png";
-import { Icon } from "react-icons-kit";
-import { eyeOff } from "react-icons-kit/feather/eyeOff";
-import { eye } from "react-icons-kit/feather/eye";
 import { useState } from "react";
 
 const Registration = () => {
@@ -17,29 +14,29 @@ const Registration = () => {
                 <h3 className="text-4xl text-center font-bold text-nexus">Create your account</h3>
                 <div className="flex justify-center">
                     <form className="flex flex-col align-center justify-center">
-                        <div className="flex flex-row">
-                            <FormInput name="FirstName" label="First Name" placeholder="John"></FormInput>
-                            <FormInput name="LastName" label="Last Name" placeholder="Doe"></FormInput>
+                        <div className="grid grid-cols-2">
+                            <FormInput name="FirstName" label="First Name" placeholder="John" required></FormInput>
+                            <FormInput name="LastName" label="Last Name" placeholder="Doe" required></FormInput>
+                            <FormInput name="Address1" label="Country" pattern="\w{0,50}" title="Letters only" placeholder="Country" required></FormInput>
+                            <FormInput name="Address2" label="City" pattern="\w{0,50}" title="Letters only" placeholder="City" required></FormInput>
+                            <FormInput name="Postal" label="Postal Code" pattern="[a-zA-Z][0-9][a-zA-Z](-| |)[0-9][a-zA-Z][0-9]" title="A1B 2C3 or A1B2C3 or A1B-2C3" placeholder="A1B 2C3" required></FormInput>
+                            <FormInput name="Suite" label="Suite" title="Numbers only (Max len 8)" pattern="\d{0,8}" placeholder="Suite Number" required></FormInput>
                         </div>
-                        <div className="flex flex-row">
-                            <FormInput name="Address1" label="Country" placeholder="Country"></FormInput>
-                            <FormInput name="Address2" label="City" placeholder="City"></FormInput>
-                        </div>
-                        <FormInput name="Postal" label="Postal Code" placeholder="ABC 123"></FormInput>
-                        <FormInput name="Phone" label="Phone" placeholder="Phone Number"></FormInput>
-                        <FormInput name="Email" label="Email" placeholder="JohnDoe@example.com"></FormInput>
-                        <div className="flex flex-row items-center">
-                            <FormInput name="Password" label="Password" type={visible ? "text" : "password"} placeholder="Password"></FormInput>
-                            <div
+                        <FormInput name="Phone" label="Phone" pattern="^\d{3}-\d{3}-\d{4}" title="123-456-7890" placeholder="Phone Number" required></FormInput>
+                        <FormInput name="Email" type="email" label="Email" placeholder="JohnDoe@example.com" required></FormInput>
+                        <FormInput name="Password" label="Password" type={visible ? "text" : "password"} placeholder="Password" required></FormInput>
+                        <label className="flex justify-start mx-2 text-sm">
+                            <input
+                                type="checkbox"
+                                className="mr-2"
                                 onClick={() => {
                                     setVisible(!visible);
                                 }}
-                                className="flex items-end h-10"
-                            >
-                                {visible ? <Icon size={"8%"} icon={eye}></Icon> : <Icon size={"8%"} icon={eyeOff}></Icon>}
-                            </div>
-                        </div>
-
+                                name="checkbox"
+                                value="value"
+                            />
+                            Show password
+                        </label>
                         <Button type="submit" variant="default">
                             Register
                         </Button>
