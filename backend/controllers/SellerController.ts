@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 import { Seller } from "../models/Sellers";
-import { random, authentication } from "../utils/auth";
+import bcrypt from "bcrypt";
 import { stripe } from "../utils/stripe";
 
 async function createSeller(req: Request, res: Response) {
@@ -78,13 +78,11 @@ async function createSeller(req: Request, res: Response) {
         },
       });
 
-      const salt = random();
       const sellerEntry = await Seller.create({
         name: name,
         email: email,
         authentication: {
-          password: authentication(salt, password),
-          salt,
+          password: bcrypt.hash(password, 10),
         },
         address: address,
         phone: phone,

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Buyer } from "../models/Buyers";
-import { random, authentication } from "../utils/auth";
+import bcrypt from "bcrypt";
 
 async function createBuyer(req: Request, res: Response) {
     try {
@@ -35,18 +35,15 @@ async function createBuyer(req: Request, res: Response) {
             return res.status(400).json({ message: "Existing account." });
         }
 
-        const salt = random();
         const user = await Buyer.create({
             name,
             email,
             authentication: {
-                password: authentication(salt, password),
-                salt
+                password: await bcrypt.hash(password, 10),
             },
             phone,
-            address
-        }
-        );
+            address,
+        });
 
         res.status(200).json({ user }).end();
     } catch (e) {
@@ -75,9 +72,7 @@ async function deleteBuyer(req: Request, res: Response) {
         } else {
             await Buyer.deleteOne({ email: email });
             console.log(`Account with email ${email} successfully deleted.`);
-            return res
-                .status(200)
-                .json({ message: "Account successfully deleted." });
+            return res.status(200).json({ message: "Account successfully deleted." });
         }
     } catch (e) {
         return res.status(500).json({ error: (e as Error).toString() });
@@ -111,10 +106,7 @@ async function updateBuyer(req: Request, res: Response) {
                 update.address = address;
             }
 
-            const updated_buyer = await Buyer.updateOne(
-                { email: email },
-                { $set: update }
-            );
+            const updated_buyer = await Buyer.updateOne({ email: email }, { $set: update });
             console.log(updated_buyer);
             res.status(200).json({ message: "Account successfully updated." });
         }
