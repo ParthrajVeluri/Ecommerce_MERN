@@ -1,5 +1,6 @@
 import Button from "../components/Button";
 import FormInput from "../components/FormInput";
+import NavBar from "../components/NavBar";
 import nexusLogo from "../images/nexus-logo.png";
 import { useState } from "react";
 
@@ -9,7 +10,7 @@ const Registration = () => {
 
     return (
         <div className="min-h-screen bg-white flex flex-col items-center justify-center h-screen">
-            <img src={nexusLogo} alt="logo" className="w-96 ml-auto mr-auto" />
+            <img src={nexusLogo} alt="logo" className="mt-3 w-96 ml-auto mr-auto" />
             <div className="border-2 border-nexus rounded-md p-3 text-slate-700">
                 <h3 className="text-4xl text-center font-bold text-nexus">Create your account</h3>
                 <div className="flex justify-center">
