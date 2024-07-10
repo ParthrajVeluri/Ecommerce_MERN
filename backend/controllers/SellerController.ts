@@ -82,7 +82,7 @@ async function createSeller(req: Request, res: Response) {
         name: name,
         email: email,
         authentication: {
-          password: bcrypt.hash(password, 10),
+          password: await bcrypt.hash(password, 10),
         },
         address: address,
         phone: phone,
